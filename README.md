@@ -1,6 +1,6 @@
 # dspec
 
-Dependent spec is a syntax sugar for defining multispecs which use unique attributes instead of type field
+dspec provides a syntax sugar helpers for defining multispecs which use attributes-based dispatch instead of type field
 
 ## Usage
 

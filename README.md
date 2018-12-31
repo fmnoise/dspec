@@ -15,9 +15,12 @@ Dependent spec is a syntax sugar for defining multispecs which use unique attrib
 (s/def ::image (s/keys :req [:image/src :image/alt]))
 (s/def ::anchor (s/keys :req [:anchor/href :anchor/text]))
 
+;; tag is dependent spec
 (ds/defspec tag ::tag)
+
 ;; image is tag with :image/src and :image/alt
 (ds/extend-spec tag ::image [:image/src :image/alt])
+
 ;; achor is tag with :anchor/href and :anchor/text
 (ds/extend-spec tag ::anchor [:anchor/href :anchor/text])
 
@@ -27,7 +30,7 @@ Dependent spec is a syntax sugar for defining multispecs which use unique attrib
 (s/valid? ::tag {:anchor/href "1.jpg"})  ;; => false
 (s/valid? ::tag {}) ;; => false
 
-(s/explain-data ::tag (dissoc image-tag :image/alt))
+(s/explain-data ::tag {:image/src "1.jpg"})
 ;; => #:clojure.spec.alpha{:problems ({:path [#:image{:src "1.jpg"}],
 ;;                                     :pred (clojure.core/fn [%] (clojure.core/contains? % :image/alt)),
 ;;                                     :val #:image{:src "1.jpg"},

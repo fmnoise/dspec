@@ -18,10 +18,10 @@ Dependent spec is a syntax sugar for defining multispecs which use unique attrib
 ;; tag is dependent spec
 (ds/defspec tag ::tag)
 
-;; image is tag with :image/src and :image/alt
+;; image is tag if it has :image/src or :image/alt
 (ds/extend-spec tag ::image [:image/src :image/alt])
 
-;; achor is tag with :anchor/href and :anchor/text
+;; achor is tag if it has :anchor/href or :anchor/text
 (ds/extend-spec tag ::anchor [:anchor/href :anchor/text])
 
 (s/valid? ::tag {:image/src "1.jpg" :image/alt "image"}) ;; => true

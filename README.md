@@ -1,6 +1,6 @@
 # dspec
 
-dspec provides a syntax sugar helpers for defining multispecs which use attributes-based dispatch instead of type field
+dspec provides some syntax sugar helpers for defining multispecs which use attributes-based dispatch instead of type field
 
 ## Usage
 

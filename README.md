@@ -16,16 +16,16 @@ Dependent spec is a syntax sugar for defining multispecs which use unique attrib
 (s/def ::anchor (s/keys :req [:anchor/href :anchor/text]))
 
 (ds/defspec tag ::tag)
+;; image is tag with :image/src and :image/alt
 (ds/extend-spec tag ::image [:image/src :image/alt])
+;; achor is tag with :anchor/href and :anchor/text
 (ds/extend-spec tag ::anchor [:anchor/href :anchor/text])
 
-(def image-tag {:image/src "1.jpg" :image/alt "image"})
-(def anchor-tag {:anchor/href "1.jpg" :anchor/text "image"})
-
-(s/valid? ::tag image-tag) ;; => true
-(s/valid? ::tag anchor-tag) ;; => true
-(s/valid? ::tag (dissoc image-tag :image/alt)) ;; => false
-(s/valid? ::tag (dissoc anchor-tag :anchor/href)) ;; => false
+(s/valid? ::tag {:image/src "1.jpg" :image/alt "image"}) ;; => true
+(s/valid? ::tag {:anchor/href "1.jpg" :anchor/text "image"}) ;; => true
+(s/valid? ::tag {:image/src "1.jpg"}) ;; => false
+(s/valid? ::tag {:anchor/href "1.jpg"})  ;; => false
+(s/valid? ::tag {}) ;; => false
 
 (s/explain-data ::tag (dissoc image-tag :image/alt))
 ;; => #:clojure.spec.alpha{:problems ({:path [#:image{:src "1.jpg"}],
@@ -34,6 +34,16 @@ Dependent spec is a syntax sugar for defining multispecs which use unique attrib
 ;;                                     :via [:user/tag :user/image], :in []}),
 ;;                         :spec :user/tag,
 ;;                         :value #:image{:src "1.jpg"}}
+
+(s/explain-data ::tag {})
+;; => #:clojure.spec.alpha{:problems [{:path [{}],
+;;                                     :pred user/tag,
+;;                                     :val {},
+;;                                     :reason "no method",
+;;                                     :via [:user/tag],
+;;                                     :in []}],
+;;                         :spec :user/tag,
+;;                         :value {}}
 ```
 
 ## License
